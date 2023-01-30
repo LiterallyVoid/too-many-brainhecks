@@ -82,8 +82,8 @@ void coalesce(void) {
 
 void runCodegen(void) {
 	printf(".intel_syntax noprefix\n");
-	printf(".globl _start\n");
-	printf("_start:\n");
+	printf(".globl main\n");
+	printf("main:\n");
 	printf("\tmov RAX, 0x4000\n");
 	printf("loop:\n");
 	printf("\tsub RSP, 4\n");
