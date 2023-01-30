@@ -92,6 +92,8 @@ void runCodegen(void) {
 	printf("\tjnz loop\n");
 	printf("\tmov RBP, RSP\n");
 
+	printf("\tmov BL, BYTE PTR [RBP]\n");
+
 	for (size_t i = 0; ops[i].kind != OP_END; i++) {
 		switch (ops[i].kind) {
 		case OP_NOP:
@@ -121,18 +123,14 @@ void runCodegen(void) {
 			printf("\t// TODO: PANIC!\n");
 			break;
 		case OP_WRITE:
-			printf("\tmov RAX, 1\n");
-			printf("\tmov RDI, 0\n");
-			printf("\tmov RSI, RBP\n");
-			printf("\tmov RDX, 1\n");
-			printf("\tsyscall\n");
+			printf("\tmovsx EDI, BL\n");
+			printf("\tcall putchar@PLT\n");
 			break;
 		}
 	}
 
-	printf("\tmov RAX, 60\n");
 	printf("\tmov RDI, 42\n");
-	printf("\tsyscall\n");
+	printf("\tcall exit\n");
 }
 
 int main(int argc, char **argv) {
